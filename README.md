@@ -26,7 +26,7 @@ You can:
 I built this tool to make average calculation easier and more visual for students (for me 🙃​ ). No more Excel sheets or manual formulas — just a clean and fast interface.
 
 ### How to use
-you can use it directly from the link: 
+you can use it directly from the link: [moyenne-calculateur](https://yanis-mnh.github.io/moyenne-calculateur/)
 
 or 
 1. Clone the repo:
@@ -71,7 +71,7 @@ Fonctionnalités :
 Je voulais un outil visuel, rapide et facile à utiliser pour les étudiants comme moi. Fini les calculs manuels ou les tableaux compliqués — ici tout est interactif et clair.
 
 ### Utilisation
-tu peux l'utiliser directement depuis le lien: 
+tu peux l'utiliser directement depuis le lien: [moyenne-calculateur](https://yanis-mnh.github.io/moyenne-calculateur/)
 ou
 1. Clone le dépôt :
    ```bash

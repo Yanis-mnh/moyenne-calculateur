@@ -39,14 +39,17 @@ const Modules = () => {
 
   return (
     <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
-      <input
-        type="number"
-        min="0"
-        placeholder="Nombre de modules"
-        value={nbrMod}
-        onChange={(e) => setNbrMod(parseInt(e.target.value))}
-        className="sticky top-0 shadow-sm w-full mb-6 px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-      />
+      <label>
+        Nombre de Modules:
+        <input
+          type="number"
+          min="0"
+          placeholder="Nombre de modules"
+          value={nbrMod}
+          onChange={(e) => setNbrMod(parseInt(e.target.value))}
+          className="sticky top-0 shadow-sm w-full mb-6 px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+      </label>
       <div className="space-y-4">
         {Array.from({ length: nbrMod }).map((_, i) => (
           <Module key={i} onChange={(data) => handleModuleChange(i, data)} />

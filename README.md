@@ -90,9 +90,3 @@ ou
    npm run dev
    ```
 ---
-
-### 👨‍💻 Author
-
-Made by **Yanis Monnah**  
-📧 monnah.yans@gmail.com  
-🌐 [GitHub – Yanis_mnh](https://github.com/Yanis_mnh)

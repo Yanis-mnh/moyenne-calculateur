@@ -1,7 +1,15 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Module from "./Module";
+import { ModuleContext } from "../contexts/ModuleContext";
+import Button from "./Button";
+import type ModuleModel from "../class/ModuleModel";
 
 const Modules = () => {
+  const context = useContext(ModuleContext);
+  if (!context) {
+    throw new Error("MODULE IS NULL");
+  }
+  const { setModule } = context;
   const [nbrMod, setNbrMod] = useState(0);
   const [modulesData, setModulesData] = useState<
     { average: number | null; coef: number }[]
@@ -10,11 +18,17 @@ const Modules = () => {
 
   const handleModuleChange = (
     index: number,
-    data: { average: number | null; coef: number }
+    data: { average: number | null; coef: number },
+    moduleModel: ModuleModel
   ) => {
     setModulesData((prev) => {
       const updated = [...prev];
       updated[index] = data;
+      return updated;
+    });
+    setModule((prev) => {
+      const updated = [...prev];
+      updated[index] = moduleModel;
       return updated;
     });
   };
@@ -50,18 +64,20 @@ const Modules = () => {
           className="sticky top-0 shadow-sm w-full mb-6 px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </label>
+
+      {/** generatin the all modules  */}
       <div className="space-y-4">
         {Array.from({ length: nbrMod }).map((_, i) => (
-          <Module key={i} onChange={(data) => handleModuleChange(i, data)} />
+          <Module
+            key={i}
+            onChange={(data, moduleModel) =>
+              handleModuleChange(i, data, moduleModel)
+            }
+          />
         ))}
       </div>
       <div className="result flex items-center space-x-4 mt-4">
-        <button
-          onClick={calculateAvg}
-          className="px-4 py-2 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 active:scale-95 transition duration-200"
-        >
-          Calculate
-        </button>
+        <Button onClick={calculateAvg}>Calculate</Button>
         <p className="text-gray-800 text-lg">
           Moyenne générale :{" "}
           {generalAverage !== null ? generalAverage.toFixed(2) : "--"}

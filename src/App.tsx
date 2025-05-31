@@ -1,8 +1,18 @@
+import { useState } from "react";
 import "./App.css";
+import type ModuleModel from "./class/ModuleModel";
 import Modules from "./components/Modules";
+import Sidebar from "./components/Sidebar";
+import { ModuleContext } from "./contexts/ModuleContext";
 
 function App() {
-  return <Modules></Modules>;
+  const [modules, setModule] = useState<ModuleModel[]>([]);
+  return (
+    <ModuleContext.Provider value={{ modules, setModule }}>
+      <Sidebar />
+      <Modules></Modules>
+    </ModuleContext.Provider>
+  );
 }
 
 export default App;

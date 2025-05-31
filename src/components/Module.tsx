@@ -1,10 +1,18 @@
 import { useState, useEffect } from "react";
+import ModuleModel from "../class/ModuleModel";
 
 const Module = ({
   onChange,
 }: {
-  onChange: (data: { average: number | null; coef: number }) => void;
+  onChange: (
+    data: { average: number | null; coef: number },
+    moduleModel: ModuleModel
+  ) => void;
 }) => {
+  const moduleModel = new ModuleModel();
+
+  const [name, setName] = useState("");
+
   const [tdChecked, setTdChecked] = useState(false);
   const [tpChecked, setTpChecked] = useState(false);
   const [examChecked, setExamChecked] = useState(false);
@@ -27,21 +35,27 @@ const Module = ({
     if (tdChecked && tdNote !== null) {
       weightedSum += tdNote * tdCoef;
       total += tdCoef;
+      moduleModel.setTd({ coef: tdCoef, note: tdNote });
     }
 
     if (tpChecked && tpNote !== null) {
       weightedSum += tpNote * tpCoef;
       total += tpCoef;
+      moduleModel.setTp({ coef: tpCoef, note: tpNote });
     }
 
     if (examChecked && examNote !== null) {
       weightedSum += examNote * examCoef;
       total += examCoef;
+      moduleModel.setExamen({ coef: examCoef, note: examCoef });
     }
 
+    if (name != null) {
+      moduleModel.setNom(name);
+    }
     const avg = total > 0 ? weightedSum / total : null;
     setAverage(avg);
-    onChange({ average: avg, coef: coefGlobal });
+    onChange({ average: avg, coef: coefGlobal }, moduleModel);
   }, [
     tdChecked,
     tpChecked,
@@ -53,6 +67,7 @@ const Module = ({
     tpCoef,
     examCoef,
     coefGlobal,
+    name,
   ]);
 
   return (
@@ -61,6 +76,7 @@ const Module = ({
         type="text"
         placeholder="Nom Module"
         className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+        onChange={(e) => setName(e.target.value)}
       />
       {/*  coef global */}
       <div>

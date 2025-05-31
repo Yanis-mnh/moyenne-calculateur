@@ -1,6 +1,6 @@
 # 📊 Moyenne Calculateur
 
-> A simple and React + TypeScript web app for calculating weighted averages of university modules.
+> A simple React + TypeScript web app for calculating weighted averages of university modules.
 
 ---
 
@@ -51,7 +51,7 @@ or
 
 ### C'est quoi ?
 
-C’est une application web simple et pratique qui permet de calculer la moyenne pondérée des modules universitaires, en tenant compte des **TD**, **TP**, **examens**, et de leurs **coefficients personnalisés**.
+C’est une application web simple qui permet de calculer la moyenne pondérée des modules universitaires, en tenant compte des **TD**, **TP**, **examens**, et de leurs **coefficients personnalisés**.
 
 Fonctionnalités :
 - Ajouter plusieurs modules
@@ -72,6 +72,7 @@ Je voulais un outil visuel, rapide et facile à utiliser pour les étudiants com
 
 ### Utilisation
 tu peux l'utiliser directement depuis le lien: [moyenne-calculateur](https://yanis-mnh.github.io/moyenne-calculateur/)
+
 ou
 1. Clone le dépôt :
    ```bash

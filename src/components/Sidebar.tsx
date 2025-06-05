@@ -11,6 +11,8 @@ const handelButtonClick = (
   switch (label) {
     case "Import template":
       file.current?.click();
+      console.log("testing go brrrrrrrrrrrrrr:", modules);
+
       break;
     case "Export template":
       saveFile(modules);
@@ -39,7 +41,7 @@ function Sidebar() {
   if (!context) {
     throw new Error("MODULE NULL");
   }
-  const { modules, setModule } = context;
+  const { modules, setModule, setNbrMod } = context;
   const buttons = [
     "Import template",
     "Export template",
@@ -56,12 +58,24 @@ function Sidebar() {
         try {
           const text = e.target?.result as string;
           const jsonData = JSON.parse(text);
-          const modules = jsonData.map((obj: any) =>
-            Object.assign(new ModuleModel(), obj)
-          );
+          const modules = jsonData.map((obj: any) => {
+            return new ModuleModel(
+              obj.nom,
+              obj.coef,
+              obj.td ? obj.td : undefined,
+              obj.tp ? obj.tp : undefined,
+              obj.examen ? obj.examen : undefined,
+              obj.tdChecked ?? false,
+              obj.tpChecked ?? false,
+              obj.examChecked ?? false,
+              obj.coefGlobal ?? 1,
+              obj.average ?? null
+            );
+          });
           setModule(modules);
-        } catch (e) {
-          console.error("ERROR: ", e);
+          setNbrMod(modules.length);
+        } catch (error) {
+          console.error("ERROR: ", error);
         }
       };
       reader.readAsText(file);

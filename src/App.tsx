@@ -7,8 +7,10 @@ import { ModuleContext } from "./contexts/ModuleContext";
 
 function App() {
   const [modules, setModule] = useState<ModuleModel[]>([]);
+  const [nbrMod, setNbrMod] = useState(0);
+
   return (
-    <ModuleContext.Provider value={{ modules, setModule }}>
+    <ModuleContext.Provider value={{ modules, setModule, nbrMod, setNbrMod }}>
       <Sidebar />
       <Modules></Modules>
     </ModuleContext.Provider>

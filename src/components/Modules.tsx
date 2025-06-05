@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import Module from "./Module";
 import { ModuleContext } from "../contexts/ModuleContext";
 import Button from "./Button";
@@ -9,23 +9,22 @@ const Modules = () => {
   if (!context) {
     throw new Error("MODULE IS NULL");
   }
-  const { setModule } = context;
-  const [nbrMod, setNbrMod] = useState(0);
-  const [modulesData, setModulesData] = useState<
-    { average: number | null; coef: number }[]
-  >([]);
-  const [generalAverage, setGeneralAverage] = useState<number | null>(null);
+  const { modules, setModule, nbrMod, setNbrMod } = context;
+  console.log(modules.length);
 
-  const handleModuleChange = (
-    index: number,
-    data: { average: number | null; coef: number },
-    moduleModel: ModuleModel
-  ) => {
-    setModulesData((prev) => {
+  const [generalAverage, setGeneralAverage] = useState<number | null>(null);
+  //pour le changement de la taille (le nbr de module)
+  useEffect(() => {
+    setModule((prev) => {
       const updated = [...prev];
-      updated[index] = data;
-      return updated;
+      if (nbrMod < updated.length) {
+        return updated.slice(0, nbrMod);
+      } else {
+        return updated;
+      }
     });
+  }, [nbrMod]);
+  const handleModuleChange = (index: number, moduleModel: ModuleModel) => {
     setModule((prev) => {
       const updated = [...prev];
       updated[index] = moduleModel;
@@ -37,10 +36,10 @@ const Modules = () => {
     let totalCoef = 0;
     let weightedSum = 0;
 
-    modulesData.forEach(({ average, coef }) => {
+    modules.forEach(({ average, coefGlobal }) => {
       if (average !== null) {
-        weightedSum += average * coef;
-        totalCoef += coef;
+        weightedSum += average * coefGlobal;
+        totalCoef += coefGlobal;
       }
     });
 
@@ -67,14 +66,24 @@ const Modules = () => {
 
       {/** generatin the all modules  */}
       <div className="space-y-4">
-        {Array.from({ length: nbrMod }).map((_, i) => (
-          <Module
-            key={i}
-            onChange={(data, moduleModel) =>
-              handleModuleChange(i, data, moduleModel)
-            }
-          />
-        ))}
+        {Array.from({ length: nbrMod }).map((_, i) => {
+          const mdl = modules[i];
+
+          return (
+            <Module
+              name={mdl?.getNom()}
+              tdChecked={mdl?.getTdChecked()}
+              coefTd={mdl?.getTd().coef}
+              tpChecked={mdl?.getTpChecked()}
+              coefTp={mdl?.getTp().coef}
+              examenChecked={mdl?.getExamChecked()}
+              coefExamen={mdl?.getExamen().coef}
+              coefGlobal={mdl?.getCoefGlobal()}
+              key={i}
+              onChange={(moduleModel) => handleModuleChange(i, moduleModel)}
+            />
+          );
+        })}
       </div>
       <div className="result flex items-center space-x-4 mt-4">
         <Button onClick={calculateAvg}>Calculate</Button>

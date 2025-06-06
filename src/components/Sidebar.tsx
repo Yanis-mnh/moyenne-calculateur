@@ -75,7 +75,7 @@ function Sidebar() {
           });
           setModule(modules);
           setNbrMod(modules.length);
-          Toast({ text: "ERROR IN IMPORTING THE TEMPLATE", type: "success" });
+          Toast({ text: "Template Imported Successfully", type: "success" });
         } catch (error) {
           console.error("ERROR: ", error);
           Toast({ text: "ERROR IN IMPORTING THE TEMPLATE", type: "error" });
@@ -142,9 +142,9 @@ function saveFile(modules: ModuleModel[]) {
     document.body.removeChild(a);
 
     URL.revokeObjectURL(url);
-    Toast({ text: "File Exported successfully", type: "success" });
+    Toast({ text: "File Exported Successfully", type: "success" });
   } catch {
-    Toast({ text: "Exporting ERROR", type: "error" });
+    Toast({ text: "ERROR IN EXPORTING THE TEMPLATE", type: "error" });
   }
 }
 

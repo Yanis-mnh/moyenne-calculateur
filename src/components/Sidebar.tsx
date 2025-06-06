@@ -2,6 +2,7 @@ import { useContext, useRef, useState } from "react";
 import Button from "./Button";
 import { ModuleContext } from "../contexts/ModuleContext";
 import ModuleModel from "../class/ModuleModel";
+import { Toast } from "./Toast";
 
 const handelButtonClick = (
   label: String,
@@ -74,8 +75,10 @@ function Sidebar() {
           });
           setModule(modules);
           setNbrMod(modules.length);
+          Toast({ text: "ERROR IN IMPORTING THE TEMPLATE", type: "success" });
         } catch (error) {
           console.error("ERROR: ", error);
+          Toast({ text: "ERROR IN IMPORTING THE TEMPLATE", type: "error" });
         }
       };
       reader.readAsText(file);
@@ -126,18 +129,23 @@ function Sidebar() {
 }
 // download file as JSOn
 function saveFile(modules: ModuleModel[]) {
-  const moduleJSON = JSON.stringify(modules, null, 2);
-  const blob = new Blob([moduleJSON], { type: "application/json" });
-  const url = URL.createObjectURL(blob);
+  try {
+    const moduleJSON = JSON.stringify(modules, null, 2);
+    const blob = new Blob([moduleJSON], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
 
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "modules.json";
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "modules.json";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
 
-  URL.revokeObjectURL(url);
+    URL.revokeObjectURL(url);
+    Toast({ text: "File Exported successfully", type: "success" });
+  } catch {
+    Toast({ text: "Exporting ERROR", type: "error" });
+  }
 }
 
 export default Sidebar;

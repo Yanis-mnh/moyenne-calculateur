@@ -4,6 +4,7 @@ import type ModuleModel from "./class/ModuleModel";
 import Modules from "./components/Modules";
 import Sidebar from "./components/Sidebar";
 import { ModuleContext } from "./contexts/ModuleContext";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const [modules, setModule] = useState<ModuleModel[]>([]);
@@ -11,6 +12,7 @@ function App() {
 
   return (
     <ModuleContext.Provider value={{ modules, setModule, nbrMod, setNbrMod }}>
+      <Toaster />
       <Sidebar />
       <Modules></Modules>
     </ModuleContext.Provider>

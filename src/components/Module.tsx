@@ -10,7 +10,10 @@ interface Props {
   examenChecked?: boolean;
   coefExamen?: number;
   coefGlobal?: number;
-  examNoteProp?: number;
+
+  noteExamen?: number;
+  noteTd?: number;
+  noteTP?: number;
 
   onChange: (moduleModel: ModuleModel) => void;
 }
@@ -27,18 +30,18 @@ const Module: React.FC<Props> = (props) => {
 
   const [tdChecked, setTdChecked] = useState<boolean>(props.tdChecked ?? false);
   const [tdCoef, setTdCoef] = useState<number>(props.coefTd ?? 1);
-  const [tdNote, setTdNote] = useState<number | null>(null);
+  const [tdNote, setTdNote] = useState<number | null>(props.noteTd ?? null);
 
   const [tpChecked, setTpChecked] = useState<boolean>(props.tpChecked ?? false);
   const [tpCoef, setTpCoef] = useState<number>(props.coefTp ?? 1);
-  const [tpNote, setTpNote] = useState<number | null>(null);
+  const [tpNote, setTpNote] = useState<number | null>(props.noteTP ?? null);
 
   const [examChecked, setExamChecked] = useState<boolean>(
     props.examenChecked ?? false
   );
   const [examCoef, setExamCoef] = useState<number>(props.coefExamen ?? 1);
   const [examNote, setExamNote] = useState<number | null>(
-    props.examNoteProp ?? null
+    props.noteExamen ?? null
   );
 
   const [average, setAverage] = useState<number | null>(null);
@@ -77,8 +80,16 @@ const Module: React.FC<Props> = (props) => {
   }, [props.coefExamen]);
 
   useEffect(() => {
-    setExamNote(props.examNoteProp ?? null);
-  }, [props.examNoteProp]);
+    setExamNote(props.noteExamen ?? null);
+  }, [props.noteExamen]);
+
+  useEffect(() => {
+    setTpNote(props.noteTP ?? null);
+  }, [props.noteTP]);
+
+  useEffect(() => {
+    setTdNote(props.noteTd ?? null);
+  }, [props.noteTd]);
 
   useEffect(() => {
     // Update ModuleModel from local state:
@@ -174,7 +185,7 @@ const Module: React.FC<Props> = (props) => {
               type="number"
               placeholder="Note TD"
               value={tdNote ?? ""}
-              onChange={(e) => setTdNote(parseFloat(e.target.value) || null)}
+              onChange={(e) => setTdNote(parseFloat(e.target.value))}
               className="w-24 px-2 py-1 border rounded-md"
             />
             <input
@@ -209,7 +220,7 @@ const Module: React.FC<Props> = (props) => {
               type="number"
               placeholder="Note TP"
               value={tpNote ?? ""}
-              onChange={(e) => setTpNote(parseFloat(e.target.value) || null)}
+              onChange={(e) => setTpNote(parseFloat(e.target.value))}
               className="w-24 px-2 py-1 border rounded-md"
             />
             <input
@@ -244,7 +255,7 @@ const Module: React.FC<Props> = (props) => {
               type="number"
               placeholder="Note Examen"
               value={examNote ?? ""}
-              onChange={(e) => setExamNote(parseFloat(e.target.value) || null)}
+              onChange={(e) => setExamNote(parseFloat(e.target.value))}
               className="w-24 px-2 py-1 border rounded-md"
             />
             <input

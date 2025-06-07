@@ -71,7 +71,7 @@ class ModuleModel {
   }
 
   setTpNote(note: number): void {
-    this.td.note = note;
+    this.tp.note = note;
   }
 
   setTpCoef(coef: number): void {
@@ -142,6 +142,21 @@ class ModuleModel {
 
   setAverage(value: number | null): void {
     this.average = value;
+  }
+
+  toJSON() {
+    return {
+      nom: this.nom,
+      coef: this.coef,
+      td: this.td,
+      tp: this.tp,
+      examen: this.examen,
+      tdChecked: this.tdChecked,
+      tpChecked: this.tpChecked,
+      examChecked: this.examChecked,
+      coefGlobal: this.coefGlobal,
+      average: this.average,
+    };
   }
 }
 

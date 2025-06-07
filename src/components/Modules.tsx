@@ -74,6 +74,9 @@ const Modules = () => {
               name={mdl?.getNom()}
               tdChecked={mdl?.getTdChecked()}
               coefTd={mdl?.getTd().coef}
+              noteTP={mdl?.getTp().note}
+              noteTd={mdl?.getTd().note}
+              noteExamen={mdl?.getExamen().note}
               tpChecked={mdl?.getTpChecked()}
               coefTp={mdl?.getTp().coef}
               examenChecked={mdl?.getExamChecked()}

@@ -16,7 +16,7 @@ const handelButtonClick = (
 
       break;
     case "Export template":
-      saveFile(modules);
+      ExportTemplate(modules);
       break;
     case "Share result":
       alert("comming soon inchalah :)");
@@ -27,9 +27,7 @@ const handelButtonClick = (
 
       break;
     case "Save":
-      console.log("save");
-      alert("comming soon inchalah :)");
-      console.log(modules);
+      saveData(modules);
 
       break;
   }
@@ -127,10 +125,25 @@ function Sidebar() {
     </div>
   );
 }
-// download file as JSOn
-function saveFile(modules: ModuleModel[]) {
+
+function saveData(modules: ModuleModel[]) {
   try {
-    const moduleJSON = JSON.stringify(modules, null, 2);
+    localStorage.setItem("userModule", JSON.stringify(modules));
+    Toast({ text: "Save Successfully", type: "success" });
+  } catch {
+    Toast({ text: "ERROR IN SAVING ", type: "error" });
+  }
+}
+
+// download file as JSOn
+function ExportTemplate(modules: ModuleModel[]) {
+  try {
+    const replacer = (key: string, value: any) => {
+      if (key === "note") return undefined;
+      if (key == "average") return undefined;
+      return value;
+    };
+    const moduleJSON = JSON.stringify(modules, replacer, 2);
     const blob = new Blob([moduleJSON], { type: "application/json" });
     const url = URL.createObjectURL(blob);
 

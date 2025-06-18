@@ -6,16 +6,22 @@ import Sidebar from "./components/Sidebar";
 import { ModuleContext } from "./contexts/ModuleContext";
 import { Toaster } from "react-hot-toast";
 import { Toast } from "./components/Toast";
+import { readSharedData } from "./utils/share";
 
 function App() {
   const [modules, setModule] = useState<ModuleModel[]>([]);
   const [nbrMod, setNbrMod] = useState(0);
+
   const isFirstSave = useRef(true);
   useEffect(() => {
-    const userModule = localStorage.getItem("userModule");
-    if (userModule != null) {
+    const localData = localStorage.getItem("userModule");
+    const sharedData = readSharedData();
+
+    let dataToUse = sharedData || localData;
+
+    if (dataToUse) {
       try {
-        const parsedMod = JSON.parse(userModule);
+        const parsedMod = JSON.parse(dataToUse);
         const mdl = parsedMod.map((obj: any) => {
           return new ModuleModel(
             obj.nom,
@@ -30,12 +36,12 @@ function App() {
             obj.average ?? null
           );
         });
-
         setNbrMod(mdl.length);
         setModule(mdl);
         console.log(parsedMod);
 
-        Toast({ text: "Modules loaded succesfuly ", type: "success" });
+        if (mdl.length > 0)
+          Toast({ text: "Modules loaded succesfully", type: "success" });
       } catch {
         Toast({
           text: "ooh noo there was an ERROR in loading the module",
@@ -44,6 +50,7 @@ function App() {
       }
     }
   }, []);
+
   useEffect(() => {
     if (isFirstSave.current) {
       isFirstSave.current = false;

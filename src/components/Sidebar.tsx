@@ -3,6 +3,7 @@ import Button from "./Button";
 import { ModuleContext } from "../contexts/ModuleContext";
 import ModuleModel from "../class/ModuleModel";
 import { Toast } from "./Toast";
+import { generateShareUrl } from "../utils/share";
 
 const handelButtonClick = (
   label: String,
@@ -18,11 +19,11 @@ const handelButtonClick = (
     case "Export template":
       ExportTemplate(modules);
       break;
-    case "Share result":
-      alert("comming soon inchalah :)");
+    case "Share":
+      share(modules);
       break;
     case "Dark mode":
-      console.log("daek mode");
+      console.log("dark mode boo");
       alert("comming soon inchalah :)");
 
       break;
@@ -44,7 +45,7 @@ function Sidebar() {
   const buttons = [
     "Import template",
     "Export template",
-    "Share result",
+    "Share",
     "Dark mode",
     "Save",
   ];
@@ -126,6 +127,14 @@ function Sidebar() {
   );
 }
 
+//share the url
+function share(module: ModuleModel[]) {
+  const url = generateShareUrl(module);
+  navigator.clipboard.writeText(url);
+  Toast({ text: "Link copied to clipboard!" });
+}
+
+//simple saving sys
 function saveData(modules: ModuleModel[]) {
   try {
     localStorage.setItem("userModule", JSON.stringify(modules));

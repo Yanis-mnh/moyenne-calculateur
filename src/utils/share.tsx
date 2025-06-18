@@ -6,7 +6,7 @@ import type ModuleModel from "../class/ModuleModel";
 
 export function generateShareUrl(data: ModuleModel[]): string {
   const compressed = compressToEncodedURIComponent(JSON.stringify(data));
-  return `${window.location.origin}?data=${compressed}`;
+  return `${window.location.origin}${window.location.pathname}?data=${compressed}`;
 }
 
 export function readSharedData(): string | null {

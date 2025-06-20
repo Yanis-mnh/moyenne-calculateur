@@ -7,7 +7,6 @@ import { ModuleContext } from "./contexts/ModuleContext";
 import { Toaster } from "react-hot-toast";
 import { Toast } from "./components/Toast";
 import { readSharedData } from "./utils/share";
-import { Analytics } from "@vercel/analytics/next";
 
 function App() {
   const [modules, setModule] = useState<ModuleModel[]>([]);
@@ -68,7 +67,6 @@ function App() {
       <Toaster />
       <Sidebar />
       <Modules></Modules>
-      <Analytics />
     </ModuleContext.Provider>
   );
 }

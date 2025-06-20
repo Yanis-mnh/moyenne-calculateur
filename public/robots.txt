@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://yanis-mnh.github.io/moyenne-calculateur/sitemap.xml
